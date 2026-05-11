@@ -12,7 +12,7 @@ function normalizeCompanyId(id) {
   return numericId;
 }
 
-export async function createCompany(data) {
+export async function createCompany(data, userId) {
   return await prisma.company.create({
     data: {
       name: data.name.trim(),
@@ -21,6 +21,7 @@ export async function createCompany(data) {
       description: data.description || null,
       foundedOn: new Date(data.foundedOn),
       logo: data.logo || null,
+      userId,
     },
     include: {
       reviews: true,
@@ -28,8 +29,11 @@ export async function createCompany(data) {
   });
 }
 
-export async function geTcompanies() {
+export async function geTcompanies(userId) {
   return await prisma.company.findMany({
+    where: {
+      userId,
+    },
     include: {
       reviews: true,
     },
@@ -39,10 +43,11 @@ export async function geTcompanies() {
   });
 }
 
-export async function getCompanyById(id) {
-  return await prisma.company.findUnique({
+export async function getCompanyById(id, userId) {
+  return await prisma.company.findFirst({
     where: {
       id: normalizeCompanyId(id),
+      userId,
     },
     include: {
       reviews: {

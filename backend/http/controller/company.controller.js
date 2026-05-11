@@ -15,7 +15,7 @@ export async function postCreateCompany(req,res,next) {
       });
     }
 
-    const data = await createCompany(result.data);
+    const data = await createCompany(result.data, req.user.id);
 
     return res.status(201).json({
         data
@@ -30,7 +30,7 @@ export async function postCreateCompany(req,res,next) {
 
 export async function getCompany(req,res,next) {
   try {
-    const data = await getCompanyById(req.params.id);
+    const data = await getCompanyById(req.params.id, req.user.id);
 
     if (!data) {
       return res.status(404).json({
@@ -52,7 +52,7 @@ export async function getCompany(req,res,next) {
 
 export async function getCompanies(req,res,next) {
     try{
-        const data = await geTcompanies();
+        const data = await geTcompanies(req.user.id);
 
         res.status(200).json({
             data

@@ -6,6 +6,7 @@ const context = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(auth.user || null);
+  
   async function login({ email, password }) {
     const { user, token } = await authApi.login({ email, password });
     auth.user = user;

@@ -1,4 +1,9 @@
 import axios from "./axios";
+import auth from "../lib/auth";
+
+const authHeaders = () => ({
+  Authorization: `Bearer ${auth.token || ""}`,
+});
 
 async function getCompanies() {
   const {
@@ -6,6 +11,7 @@ async function getCompanies() {
   } = await axios({
     method: "get",
     url: "/api/company",
+    headers: authHeaders(),
   });
 
   return data;
@@ -17,6 +23,7 @@ async function getCompany(id) {
   } = await axios({
     method: "get",
     url: `/api/company/${id}`,
+    headers: authHeaders(),
   });
 
   return data;
@@ -35,6 +42,7 @@ async function createCompany({
   } = await axios({
     method: "post",
     url: "/api/company",
+    headers: authHeaders(),
     data: {
       name,
       city,
