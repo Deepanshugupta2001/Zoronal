@@ -16,7 +16,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-const PORT = process.env.PORT || 'https://zoronal-9zsp.onrender.com';
+const PORT = process.env.PORT || 4444;
 const prisma = new PrismaClient();
 
 app.use((req, res, next) => {
